@@ -1,8 +1,7 @@
 def instructions():
     try:
         ######## INSERT YOUR INSTRUCTIONS BELOW THIS LINE ########
-        region, instance_id = ec2_get_instance_id("lee-new-arcadia")
-        status, ip_addr = ec2_start_instance(region, instance_id)
+        status, ip_addr = ec2_start_instance("lee-new-arcadia")
 
         namespace = xc_create_namespace()       
         xc_create_healthcheck(namespace, "lee-hc")
@@ -26,8 +25,6 @@ def instructions():
         'statusCode': 200,
         'body': json.dumps({
             ######## ADJUST PARAMETERS THAT YOU WANT RETURNED TO SKILLABLE BELOW THIS LINE ########
-            'region': region,
-            'instance_id': instance_id,
             'status': status,
             'ip_addr': ip_addr,
             'namespace': namespace

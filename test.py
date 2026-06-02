@@ -1,4 +1,5 @@
 def instructions():
+    debug()
     response = "Hello world -- these instructions came from GitHub"
     print(response)
     return {

@@ -1,3 +1,9 @@
 def instructions():
-    print("Hello world -- these instructions came from GitHub")
-    return "It worked!"
+    response = "Hello world -- these instructions came from GitHub"
+    print(response)
+    return {
+        'statusCode': 200,
+        'body': json.dumps({
+            'content': response
+        })
+    }

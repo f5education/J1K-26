@@ -1,10 +1,8 @@
 def instructions():
     print("instructions(): before 'try'")
     try:
-        print("instructions(): after 'try'")
         ######## INSERT YOUR INSTRUCTIONS BELOW THIS LINE ########
         status, ip_addr = ec2_start_instance("lee-new-arcadia")
-        print("instructions(): after 'ec_start_instance()'")
 
         # namespace = xc_create_namespace()       
         # xc_create_healthcheck(namespace, "lee-hc")

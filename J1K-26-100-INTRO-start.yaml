@@ -1,0 +1,50 @@
+# comments can go anywhere
+instructions:              # comment can go anywhere
+  ec2_start_instance:
+    name: lee-new-arcadia
+    returns:
+    - $status
+    - $ip_addr
+
+  xc_create_namespace:
+    returns:
+    - $namespace
+  xc_create_healthcheck:
+    namespace: $namespace
+    name: lee-hc
+  xc_create_originpool:
+    namespace: $namespace
+    name: lee-op
+    hc_name: lee-hc
+    ip_addr: $ip_addr
+    port: 80
+  xc_create_loadbalancer:
+    namespace: $namespace
+    name: lee-lb-na
+    fqdn: lee-lb-na.dev.learnf5.cloud
+    op_name; lee-op
+  xc_create_loadbalancer:
+    namespace: $namespace
+    name: lee-lb-eu
+    fqdn: lee-lb-eu.dev.learnf5.cloud
+    op_name; lee-op    
+  
+  xc_create_healthcheck:
+    namespace: default
+    name: default-na-hc
+  xc_create_originpool:
+    namespace: default
+    name: arcadia-na-op
+    hc_name: arcadia-na-hc
+    ip_addr: $ip_addr
+    port: 80
+  xc_create_loadbalancer:
+    namespace: default
+    name: arcadia-na-lb
+    fqdn: arcadia-na.dev.learnf5.cloud
+    op_name; arcadia-na-op
+  xc_create_loadbalancer:
+    namespace: default
+    name: arcadia-eu-lb
+    fqdn: arcadia-eu.dev.learnf5.cloud
+    op_name; arcadia-na-op

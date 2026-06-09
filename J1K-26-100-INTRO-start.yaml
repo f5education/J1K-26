@@ -1,5 +1,5 @@
 # comments can go anywhere
-instructions:              # comment can go anywhere
+instructions:              # comments can go anywhere
   ec2_start_instance:
     name: lee-new-arcadia
     returns:

@@ -4,10 +4,10 @@ def instructions():
         status, ip_addr = ec2_start_instance("lee-new-arcadia")
 
         namespace = xc_create_namespace()       
-        xc_create_healthcheck(namespace, "lee-hc")
-        xc_create_originpool(namespace, "lee-op", "lee-hc", ip_addr, 80)
-        xc_create_loadbalancer(namespace, "lee-lb-na", "lee-lb-na.dev.learnf5.cloud", "lee-op")
-        xc_create_loadbalancer(namespace, "lee-lb-eu", "lee-lb-eu.dev.learnf5.cloud", "lee-op")
+        xc_create_healthcheck(namespace, namespace + "-hc")
+        xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", ip_addr, 80)
+        xc_create_loadbalancer(namespace, namespace + "-lb-na", namespace + "-lb-na.dev.learnf5.cloud", namespace + "-op")
+        xc_create_loadbalancer(namespace, namespace + "-lb-eu", namespace + "-lb-eu.dev.learnf5.cloud", namespace + "-op")
 
         xc_create_healthcheck("default", "arcadia-na-hc")
         xc_create_originpool("default", "arcadia-na-op", "arcadia-na-hc", ip_addr, 80)    

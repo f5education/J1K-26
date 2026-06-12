@@ -4,7 +4,7 @@ def instructions():
         status, ip_addr = ec2_start_instance("lee-new-arcadia")
 
         namespace = xc_create_namespace()
-        # xc_create_user(namespace)
+        xc_create_user(namespace)
         xc_create_healthcheck(namespace, namespace + "-hc")
         xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", ip_addr, 80)
         xc_create_loadbalancer(namespace, namespace + "-lb-na", namespace + "-lb-na.dev.learnf5.cloud", namespace + "-op")

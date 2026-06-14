@@ -12,8 +12,8 @@ def instructions():
 
         xc_create_healthcheck("default", "arcadia-na-hc")
         xc_create_originpool("default", "arcadia-na-op", "arcadia-na-hc", ip_addr, 80)    
-        xc_create_loadbalancer("default", "aracdia-na-lb", "arcadia-na.dev.learnf5.cloud", "arcadia-na-op")     # intentionally mispelled
-        xc_create_loadbalancer("default", "aracdia-eu-lb", "arcadia-eu.dev.learnf5.cloud", "arcadia-na-op")     # intentionally mispelled
+        xc_create_loadbalancer("default", "arcadia-na-lb", "arcadia-na.dev.learnf5.cloud", "arcadia-na-op")
+        xc_create_loadbalancer("default", "arcadia-eu-lb", "arcadia-eu.dev.learnf5.cloud", "arcadia-na-op")
         ######## INSERT YOUR INSTRUCTIONS ABOVE THIS LINE ########
 
     except Exception as e:

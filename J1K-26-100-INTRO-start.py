@@ -26,9 +26,9 @@ def instructions():
         'statusCode': 200,
         'body': json.dumps({
             ######## ADJUST PARAMETERS THAT YOU WANT RETURNED TO SKILLABLE BELOW THIS LINE ########
-            'status': status,
-            'ip_addr': ip_addr #,
-            # 'namespace': namespace
+            # 'status': status,
+            # 'ip_addr': ip_addr,
+            'namespace': namespace
             ######## ADJUST PARAMETERS THAT YOU WANT RETURNED TO SKILLABLE ABOVE THIS LINE ########
         })
     }

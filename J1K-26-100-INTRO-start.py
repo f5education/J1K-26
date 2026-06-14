@@ -1,7 +1,7 @@
 def instructions():
     try:
         ######## INSERT YOUR INSTRUCTIONS BELOW THIS LINE ########
-        status, ip_addr = ec2_start_instance("lee-new-arcadia")
+        # status, ip_addr = ec2_start_instance("lee-new-arcadia")
         namespace = xc_create_user_namespace()
         # namespace = xc_create_namespace()
         # xc_create_user(namespace)

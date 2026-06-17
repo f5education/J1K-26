@@ -1,12 +1,19 @@
 # comments can go anywhere
 instructions:              # comments can go anywhere
-  ec2_start_instance:
-    name: lee-new-arcadia
-    returns:
-    - $status
-    - $ip_addr
+  concurrent:
+    ec2_start_instance:
+      name: jp-arcadia
+      returns:
+      - $jp_status
+      - $jp_ip_addr
+    az_start_vm:
+      name: us-arcadia
+      returns:
+      - $us_status
+      - $us_ip_addr
 
-  xc_create_namespace:
+  xc_create_user_namespace:
+    user: $user
     returns:
     - $namespace
   xc_create_healthcheck:
@@ -22,12 +29,12 @@ instructions:              # comments can go anywhere
     namespace: $namespace
     name: lee-lb-na
     fqdn: lee-lb-na.dev.learnf5.cloud
-    op_name; lee-op
+    op_name: lee-op
   xc_create_loadbalancer:
     namespace: $namespace
     name: lee-lb-eu
     fqdn: lee-lb-eu.dev.learnf5.cloud
-    op_name; lee-op    
+    op_name: lee-op    
   
   xc_create_healthcheck:
     namespace: default
@@ -42,9 +49,9 @@ instructions:              # comments can go anywhere
     namespace: default
     name: arcadia-na-lb
     fqdn: arcadia-na.dev.learnf5.cloud
-    op_name; arcadia-na-op
+    op_name: arcadia-na-op
   xc_create_loadbalancer:
     namespace: default
     name: arcadia-eu-lb
     fqdn: arcadia-eu.dev.learnf5.cloud
-    op_name; arcadia-na-op
+    op_name: arcadia-na-op

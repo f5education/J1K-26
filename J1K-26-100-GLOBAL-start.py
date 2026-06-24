@@ -19,7 +19,9 @@ def instructions():
     except Exception as e:
         return {
             'statusCode': 500,
-            'errorMsg': json.dumps(str(e))
+            'body': json.dumps({
+                'errorMsg': (str(e)
+            })
         }
 
     return {

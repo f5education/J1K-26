@@ -20,7 +20,7 @@ def instructions():
         return {
             'statusCode': 500,
             'body': json.dumps({
-                'errorMsg': (str(e)
+                'errorMsg': f'ERROR: {str(e)}'
             })
         }
 

@@ -3,7 +3,7 @@ def instructions():
         ######## INSERT YOUR INSTRUCTIONS BELOW THIS LINE ########
         status, ip_addr = ec2_start_instance("jp-arc1-na")
         
-        namespace = xc_create_user_namespace()
+        namespace = xc_create_user_and_namespace()
         
         xc_create_healthcheck(namespace, namespace + "-hc")
         xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", ip_addr, 80)

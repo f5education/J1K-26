@@ -35,8 +35,10 @@ def instructions():
         'statusCode': 200,
         'body': json.dumps({
             ######## ADJUST PARAMETERS THAT YOU WANT RETURNED TO SKILLABLE BELOW THIS LINE ########
-            'status': status,
-            'ip_addr': ip_addr,
+            #'status': status,
+            #'ip_addr': ip_addr,
+            'ip_addr_jp_ap1_eu': ip_addr_jp_ap1_eu,
+            'ip_addr_jp_ap1_na': ip_addr_jp_ap1_na,
             'namespace': namespace
             ######## ADJUST PARAMETERS THAT YOU WANT RETURNED TO SKILLABLE ABOVE THIS LINE ########
         })

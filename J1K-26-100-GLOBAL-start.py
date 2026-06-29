@@ -1,7 +1,14 @@
 def instructions():
     try:
         ######## INSERT YOUR INSTRUCTIONS BELOW THIS LINE ########
-        status, ip_addr = ec2_start_instance("jp-arc1-na")
+        #status, ip_addr = ec2_start_instance("jp-arc1-na")
+        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+            # Submit tasks
+            futures_jp_ap1_eu = executor.submit(ec2_start_instance, "jp_ap1_eu")
+            futures_jp_ap1_na = executor.submit(ec2_start_instance, "jp_ap1_na")
+            # Retrieve results
+            _, ip_addr_jp_ap1_eu = futures_jp_ap1_eu.result()
+            _, ip_addr_jp_ap1_na = futures_jp_ap1_na.result()
         
         namespace = xc_create_user_and_namespace()
         

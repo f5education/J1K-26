@@ -41,7 +41,7 @@ def instructions():
             #'ip_addr': ip_addr,
             'ip_addr_jp_arc1_eu': ip_addr_jp_arc1_eu,
             'ip_addr_jp_arc1_na': ip_addr_jp_arc1_na,
-            'ip_addr_jp_arc1_eu': ip_addr_jp_arc1_eu,
+            'ip_addr_jp_arc1_jp': ip_addr_jp_arc1_jp,
             'namespace': namespace
             ######## ADJUST PARAMETERS THAT YOU WANT RETURNED TO SKILLABLE ABOVE THIS LINE ########
         })

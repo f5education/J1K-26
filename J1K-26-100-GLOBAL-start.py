@@ -4,11 +4,13 @@ def instructions():
         #status, ip_addr = ec2_start_instance("jp-arc1-na")
         with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
             # Submit tasks
-            futures_jp_ap1_eu = executor.submit(ec2_start_instance, "jp-ap1-eu")
-            futures_jp_ap1_na = executor.submit(ec2_start_instance, "jp-ap1-na")
+            futures_jp_arc1_eu = executor.submit(ec2_start_instance, "jp-arc1-eu")
+            futures_jp_arc1_na = executor.submit(ec2_start_instance, "jp-arc1-na")
+            futures_jp_arc1_jp = executor.submit(ec2_start_instance, "jp-arc1-jp")
             # Retrieve results
-            _, ip_addr_jp_ap1_eu = futures_jp_ap1_eu.result()
-            _, ip_addr_jp_ap1_na = futures_jp_ap1_na.result()
+            _, ip_addr_jp_arc1_eu = futures_jp_arc1_eu.result()
+            _, ip_addr_jp_arc1_na = futures_jp_arc1_na.result()
+            _, ip_addr_jp_arc1_jp = futures_jp_arc1_jp.result()
         
         namespace = xc_create_user_and_namespace()
         
@@ -37,8 +39,9 @@ def instructions():
             ######## ADJUST PARAMETERS THAT YOU WANT RETURNED TO SKILLABLE BELOW THIS LINE ########
             #'status': status,
             #'ip_addr': ip_addr,
-            'ip_addr_jp_ap1_eu': ip_addr_jp_ap1_eu,
-            'ip_addr_jp_ap1_na': ip_addr_jp_ap1_na,
+            'ip_addr_jp_arc1_eu': ip_addr_jp_arc1_eu,
+            'ip_addr_jp_arc1_na': ip_addr_jp_arc1_na,
+            'ip_addr_jp_arc1_eu': ip_addr_jp_arc1_eu,
             'namespace': namespace
             ######## ADJUST PARAMETERS THAT YOU WANT RETURNED TO SKILLABLE ABOVE THIS LINE ########
         })

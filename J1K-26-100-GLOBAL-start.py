@@ -15,7 +15,17 @@ def instructions():
         namespace = xc_create_user_and_namespace()
         xc_create_healthcheck(namespace, namespace + "-hc")
         xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", [ip_addr_jp_arc1_eu, ip_addr_jp_arc1_na, ip_addr_jp_arc1_jp], 80)
-        xc_create_loadbalancer(namespace, namespace + "-lb", namespace + "-lb.f5training7.cloud", namespace + "-op")
+        tls_conf = {
+            "custom_security": {
+                "cipher_suites": [
+                    "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+                    "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"
+                ],
+                "max_version": "TLSv1_2",
+                "min_version": "TLSv1_2"
+            }
+        }
+        xc_create_loadbalancer(namespace, namespace + "-lb", namespace + "-lb.f5training7.cloud", namespace + "-op", tls_config = tls_conf)
     
         # xc_create_healthcheck(namespace, namespace + "-hc")
         # xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", ip_addr, 80)

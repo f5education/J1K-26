@@ -14,7 +14,7 @@ def instructions():
         
         namespace = xc_create_user_and_namespace()
         xc_create_healthcheck(namespace, namespace + "-hc")
-        xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", [ip_addr_jp_arc1_na], 80)
+        xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", [ip_addr_jp_arc1_eu, ip_addr_jp_arc1_na, ip_addr_jp_arc1_jp], 80)
         xc_create_loadbalancer(namespace, namespace + "-lb", namespace + "-lb.f5training7.cloud", namespace + "-op")
     
         # xc_create_healthcheck(namespace, namespace + "-hc")

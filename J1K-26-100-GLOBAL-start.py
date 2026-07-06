@@ -13,7 +13,10 @@ def instructions():
             _, ip_addr_jp_arc1_jp = futures_jp_arc1_jp.result()
         
         namespace = xc_create_user_and_namespace()
-        
+        xc_create_healthcheck(namespace, namespace + "-hc")
+        xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", ip_addr_jp_arc1-na, 80)
+        xc_create_loadbalancer(namespace, namespace + "-lb", namespace + "-lb.f5training7.cloud", namespace + "-op")
+    
         # xc_create_healthcheck(namespace, namespace + "-hc")
         # xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", ip_addr, 80)
         # xc_create_loadbalancer(namespace, namespace + "-lb-na", namespace + "-lb-na.dev.learnf5.cloud", namespace + "-op")

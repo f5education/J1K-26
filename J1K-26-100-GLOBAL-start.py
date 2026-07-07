@@ -17,9 +17,11 @@ def instructions():
             _, ip_addr_jp_ap1_jp = futures_jp_ap1_jp.result()
         
         namespace = xc_create_user_and_namespace()
-        xc_create_healthcheck(namespace, namespace + "-hc")
-        xc_create_originpool(namespace, namespace + "-ap-op", namespace + "-hc", [ip_addr_jp_ap1_eu, ip_addr_jp_ap1_na, ip_addr_jp_ap1_jp], 80)
-        xc_create_originpool(namespace, namespace + "-arc1-op", namespace + "-hc", [ip_addr_jp_arc1_eu, ip_addr_jp_arc1_na, ip_addr_jp_arc1_jp], 80)
+        xc_create_healthcheck(namespace, namespace + "-tls-hc")
+        xc_create_healthcheck(namespace, namespace + "-arc-hc")
+        xc_create_originpool(namespace, namespace + "-tls-op", namespace + "-tls-hc", [ip_addr_jp_ap1_eu, ip_addr_jp_ap1_na, ip_addr_jp_ap1_jp], 80)
+        xc_create_originpool(namespace, namespace + "-arc-na-op", namespace + "-arc-hc", [ip_addr_jp_arc1_na], 80)
+        xc_create_originpool(namespace, namespace + "-arc-eu-op", namespace + "-arc-hc", [ip_addr_jp_arc1_eu], 80)
         tls_conf = {
             "custom_security": {
                 "cipher_suites": [
@@ -29,8 +31,9 @@ def instructions():
                 "min_version": "TLSv1_0"
             }
         }
-        xc_create_loadbalancer(namespace, namespace + "-ap1-lb", namespace + "-ap1-lb.f5training7.cloud", namespace + "-ap1-op", tls_config = tls_conf)
-        xc_create_loadbalancer(namespace, namespace + "-arc1-lb", namespace + "-arc1-lb.f5training7.cloud", namespace + "-arc1-op")
+        xc_create_loadbalancer(namespace, namespace + "-tls-lb", namespace + ".tls.f5training7.cloud", namespace + "-tls-op", tls_config = tls_conf)
+        xc_create_loadbalancer(namespace, namespace + "-arc-na-lb", namespace + "-arcadia-na.f5training7.cloud", namespace + "-arc-op")
+        xc_create_loadbalancer(namespace, namespace + "-arc-eu-lb", namespace + "-arcadia-eu.f5training7.cloud", namespace + "-arc-op")
         
     except Exception as e:
         return {

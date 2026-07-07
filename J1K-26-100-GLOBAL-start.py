@@ -49,9 +49,9 @@ def instructions():
             'ip_addr_jp_arc1_eu': ip_addr_jp_arc1_eu,
             'ip_addr_jp_arc1_na': ip_addr_jp_arc1_na,
             'ip_addr_jp_arc1_jp': ip_addr_jp_arc1_jp,
-            'ip_addr_jp_arc1_eu': ip_addr_jp_ap1_eu,
-            'ip_addr_jp_arc1_na': ip_addr_jp_ap1_na,
-            'ip_addr_jp_arc1_jp': ip_addr_jp_ap1_jp,
+            'ip_addr_jp_ap1_eu': ip_addr_jp_ap1_eu,
+            'ip_addr_jp_ap1_na': ip_addr_jp_ap1_na,
+            'ip_addr_jp_ap1_jp': ip_addr_jp_ap1_jp,
             'namespace': namespace
         })
     }

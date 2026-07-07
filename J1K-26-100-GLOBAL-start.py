@@ -1,42 +1,34 @@
 def instructions():
     try:
-        ######## INSERT YOUR INSTRUCTIONS BELOW THIS LINE ########
-        #status, ip_addr = ec2_start_instance("jp-arc1-na")
-        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
             # Submit tasks
             futures_jp_arc1_eu = executor.submit(ec2_start_instance, "jp-arc1-eu")
             futures_jp_arc1_na = executor.submit(ec2_start_instance, "jp-arc1-na")
             futures_jp_arc1_jp = executor.submit(ec2_start_instance, "jp-arc1-jp")
+            futures_jp_arc1_eu = executor.submit(ec2_start_instance, "jp-ap1-eu")
+            futures_jp_arc1_na = executor.submit(ec2_start_instance, "jp-ap1-na")
+            futures_jp_arc1_jp = executor.submit(ec2_start_instance, "jp-ap1-jp")
             # Retrieve results
             _, ip_addr_jp_arc1_eu = futures_jp_arc1_eu.result()
             _, ip_addr_jp_arc1_na = futures_jp_arc1_na.result()
             _, ip_addr_jp_arc1_jp = futures_jp_arc1_jp.result()
+            _, ip_addr_jp_arc1_eu = futures_jp_ap1_eu.result()
+            _, ip_addr_jp_arc1_na = futures_jp_ap1_na.result()
+            _, ip_addr_jp_arc1_jp = futures_jp_ap1_jp.result()
         
         namespace = xc_create_user_and_namespace()
         xc_create_healthcheck(namespace, namespace + "-hc")
-        xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", [ip_addr_jp_arc1_eu, ip_addr_jp_arc1_na, ip_addr_jp_arc1_jp], 80)
+        xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", [ip_addr_jp_ap1_eu, ip_addr_jp_ap1_na, ip_addr_jp_ap1_jp], 80)
         tls_conf = {
             "custom_security": {
                 "cipher_suites": [
-                    "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
-                    "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"
+                    "TLS_RSA_WITH_AES_128_CBC_SHA"
                 ],
-                "max_version": "TLSv1_2",
-                "min_version": "TLSv1_2"
+                "max_version": "TLSv1_0",
+                "min_version": "TLSv1_0"
             }
         }
         xc_create_loadbalancer(namespace, namespace + "-lb", namespace + "-lb.f5training7.cloud", namespace + "-op", tls_config = tls_conf)
-    
-        # xc_create_healthcheck(namespace, namespace + "-hc")
-        # xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", ip_addr, 80)
-        # xc_create_loadbalancer(namespace, namespace + "-lb-na", namespace + "-lb-na.dev.learnf5.cloud", namespace + "-op")
-        # xc_create_loadbalancer(namespace, namespace + "-lb-eu", namespace + "-lb-eu.dev.learnf5.cloud", namespace + "-op")
-
-        # xc_create_healthcheck("default", "arcadia-na-hc")
-        # xc_create_originpool("default", "arcadia-na-op", "arcadia-na-hc", ip_addr, 80)    
-        # xc_create_loadbalancer("default", "arcadia-na-lb", "arcadia-na.dev.learnf5.cloud", "arcadia-na-op")
-        # xc_create_loadbalancer("default", "arcadia-eu-lb", "arcadia-eu.dev.learnf5.cloud", "arcadia-na-op")
-        ######## INSERT YOUR INSTRUCTIONS ABOVE THIS LINE ########
 
     except Exception as e:
         return {
@@ -49,13 +41,12 @@ def instructions():
     return {
         'statusCode': 200,
         'body': json.dumps({
-            ######## ADJUST PARAMETERS THAT YOU WANT RETURNED TO SKILLABLE BELOW THIS LINE ########
-            #'status': status,
-            #'ip_addr': ip_addr,
             'ip_addr_jp_arc1_eu': ip_addr_jp_arc1_eu,
             'ip_addr_jp_arc1_na': ip_addr_jp_arc1_na,
             'ip_addr_jp_arc1_jp': ip_addr_jp_arc1_jp,
+            'ip_addr_jp_arc1_eu': ip_addr_jp_ap1_eu,
+            'ip_addr_jp_arc1_na': ip_addr_jp_ap1_na,
+            'ip_addr_jp_arc1_jp': ip_addr_jp_ap1_jp,
             'namespace': namespace
-            ######## ADJUST PARAMETERS THAT YOU WANT RETURNED TO SKILLABLE ABOVE THIS LINE ########
         })
     }

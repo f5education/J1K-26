@@ -5,9 +5,9 @@ def instructions():
             futures_jp_arc1_eu = executor.submit(ec2_start_instance, "jp-arc1-eu")
             futures_jp_arc1_na = executor.submit(ec2_start_instance, "jp-arc1-na")
             futures_jp_arc1_jp = executor.submit(ec2_start_instance, "jp-arc1-jp")
-            futures_jp_arc1_eu = executor.submit(ec2_start_instance, "jp-ap1-eu")
-            futures_jp_arc1_na = executor.submit(ec2_start_instance, "jp-ap1-na")
-            futures_jp_arc1_jp = executor.submit(ec2_start_instance, "jp-ap1-jp")
+            futures_jp_ap1_eu = executor.submit(ec2_start_instance, "jp-ap1-eu")
+            futures_jp_ap1_na = executor.submit(ec2_start_instance, "jp-ap1-na")
+            futures_jp_ap1_jp = executor.submit(ec2_start_instance, "jp-ap1-jp")
             # Retrieve results
             _, ip_addr_jp_arc1_eu = futures_jp_arc1_eu.result()
             _, ip_addr_jp_arc1_na = futures_jp_arc1_na.result()

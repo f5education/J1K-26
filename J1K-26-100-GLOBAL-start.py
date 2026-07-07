@@ -18,7 +18,8 @@ def instructions():
         
         namespace = xc_create_user_and_namespace()
         xc_create_healthcheck(namespace, namespace + "-hc")
-        xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", [ip_addr_jp_ap1_eu, ip_addr_jp_ap1_na, ip_addr_jp_ap1_jp], 80)
+        xc_create_originpool(namespace, namespace + "-ap-op", namespace + "-hc", [ip_addr_jp_ap1_eu, ip_addr_jp_ap1_na, ip_addr_jp_ap1_jp], 80)
+        xc_create_originpool(namespace, namespace + "-arc1-op", namespace + "-hc", [ip_addr_jp_arc1_eu, ip_addr_jp_arc1_na, ip_addr_jp_arc1_jp], 80)
         tls_conf = {
             "custom_security": {
                 "cipher_suites": [
@@ -28,8 +29,9 @@ def instructions():
                 "min_version": "TLSv1_0"
             }
         }
-        xc_create_loadbalancer(namespace, namespace + "-lb", namespace + "-lb.f5training7.cloud", namespace + "-op", tls_config = tls_conf)
-
+        xc_create_loadbalancer(namespace, namespace + "-ap1-lb", namespace + "-ap1-lb.f5training7.cloud", namespace + "-ap1-op", tls_config = tls_conf)
+        xc_create_loadbalancer(namespace, namespace + "-arc1-lb", namespace + "-arc1-lb.f5training7.cloud", namespace + "-arc1-op")
+        
     except Exception as e:
         return {
             'statusCode': 500,

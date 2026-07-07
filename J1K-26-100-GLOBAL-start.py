@@ -12,9 +12,9 @@ def instructions():
             _, ip_addr_jp_arc1_eu = futures_jp_arc1_eu.result()
             _, ip_addr_jp_arc1_na = futures_jp_arc1_na.result()
             _, ip_addr_jp_arc1_jp = futures_jp_arc1_jp.result()
-            _, ip_addr_jp_arc1_eu = futures_jp_ap1_eu.result()
-            _, ip_addr_jp_arc1_na = futures_jp_ap1_na.result()
-            _, ip_addr_jp_arc1_jp = futures_jp_ap1_jp.result()
+            _, ip_addr_jp_ap1_eu = futures_jp_ap1_eu.result()
+            _, ip_addr_jp_ap1_na = futures_jp_ap1_na.result()
+            _, ip_addr_jp_ap1_jp = futures_jp_ap1_jp.result()
         
         namespace = xc_create_user_and_namespace()
         xc_create_healthcheck(namespace, namespace + "-hc")

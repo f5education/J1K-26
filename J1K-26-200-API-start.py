@@ -1,7 +1,7 @@
 def instructions():
     try:
         namespace = xc_create_user_and_namespace()
-        ec2_create_instance('crAPI-template', namespace + "-app")
+        _, ip_addr = ec2_create_instance('crAPI-template', namespace + "-app")
         # xc_create_healthcheck(namespace, namespace + "-hc")
         # xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", ["54.211.5.17"], 80)
         # xc_create_loadbalancer(namespace, namespace + "-lb", namespace + "-api.f5training7.cloud", namespace + "-op")
@@ -17,6 +17,7 @@ def instructions():
     return {
         'statusCode': 200,
         'body': json.dumps({
-            'namespace': namespace
+            'namespace': namespace,
+            'ip_addr': ip_addr
         })
     }

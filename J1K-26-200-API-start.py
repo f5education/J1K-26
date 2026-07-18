@@ -2,9 +2,9 @@ def instructions():
     try:
         namespace = xc_create_user_and_namespace()
         _, ip_addr = ec2_create_instance('crAPI-template', namespace + "-app")
-        # xc_create_healthcheck(namespace, namespace + "-hc")
-        # xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", ["54.211.5.17"], 80)
-        # xc_create_loadbalancer(namespace, namespace + "-lb", namespace + "-api.f5training7.cloud", namespace + "-op")
+        xc_create_healthcheck(namespace, namespace + "-hc")
+        xc_create_originpool(namespace, namespace + "-op", namespace + "-hc", [ip_addr], 80)
+        xc_create_loadbalancer(namespace, namespace + "-lb", namespace + "-api.f5training7.cloud", namespace + "-op")
 
     except Exception as e:
         return {

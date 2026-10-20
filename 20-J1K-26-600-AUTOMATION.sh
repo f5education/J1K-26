@@ -13,3 +13,6 @@ mv "/tmp/terraform-provider-f5xc_v${VERSION}" ~/.terraform.d/plugins/registry.te
 
 # install the Terraform CLI app
 sudo snap install terraform --classic
+
+# get the namespace saved in a Skillable variable and write it to a file
+echo "@lab.Variable(namespace)" >~/.namespace

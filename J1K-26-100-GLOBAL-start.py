@@ -34,9 +34,6 @@ def instructions():
         xc_create_loadbalancer(namespace, namespace + "-tls-lb", namespace + "-tls.f5training7.cloud", namespace + "-tls-op", tls_config = tls_conf)
         xc_create_loadbalancer(namespace, namespace + "-arc-na-lb", namespace + "-arcadia-na.f5training7.cloud", namespace + "-arc-na-op")
         xc_create_loadbalancer(namespace, namespace + "-arc-eu-lb", namespace + "-arcadia-eu.f5training7.cloud", namespace + "-arc-eu-op")
-
-        # test only
-        _ = xc_create_namespace()
         
     except Exception as e:
         return {

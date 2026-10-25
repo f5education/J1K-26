@@ -17,7 +17,7 @@ def instructions():
     return {
         'statusCode': 200,
         'body': json.dumps({
-            'namespace': namespace # ,
+            'namespace': namespace,
             'ip_addr_jp_arc1_jp': ip_addr_jp_arc1_jp
             # 'tenant_api': tenant_api
         })

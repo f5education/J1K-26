@@ -16,7 +16,7 @@ def instructions():
         'statusCode': 200,
         'body': json.dumps({
             'namespace': namespace,
-            'ip_addr_jp_arc1_jp': ip_addr_jp_arc1_jp
-            # , 'api_token': api_token
+            'ip_addr_jp_arc1_jp': ip_addr_jp_arc1_jp,
+            'api_token': api_token
         })
     }

@@ -1,6 +1,7 @@
 def instructions():
     try:
         namespace = xc_create_namespace_name()
+        xc_create_user(namespace)
         api_token = xc_create_api_token(namespace)
         _, ip_addr_jp_arc1_jp = ec2_start_instance("jp-arc1-jp")
         

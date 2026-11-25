@@ -1,0 +1,43 @@
+# =============================================================================
+# ShopAI Chat — Python Dependencies (Pinned for Reproducible Builds)
+# =============================================================================
+
+# --- Web Framework & ASGI Server ---
+# Core async web framework serving /healthz, /api/client-config, POST /api/proxy,
+# and explicit static HTML/asset routes without exposing the repository root.
+fastapi==0.115.6
+
+# Production ASGI HTTP server that binds 0.0.0.0:PORT inside Docker or local venvs.
+uvicorn==0.32.1
+
+# --- Outbound HTTP Client ---
+# Shared async HTTP client with connection pooling, strict connect/read timeouts,
+# disabled redirects, configurable local-dev TLS verification, and streamed 2 MiB
+# response caps (also provides httpx.MockTransport for offline unit tests).
+httpx==0.28.1
+
+# --- Configuration & Schema Validation ---
+# Enforces strict request schemas (ChatMessage), URL/path validators, and SecretStr
+# masking so API tokens and keys never leak in tracebacks or startup errors.
+pydantic==2.10.6
+
+# Loads typed Settings from environment variables and optional local .env files
+# while ensuring process environment variables always take precedence.
+pydantic-settings==2.7.1
+
+# --- Azure Managed Identity Authentication (CHAT_BACKEND=foundry_agent) ---
+# Provides async ManagedIdentityCredential to acquire Entra ID bearer tokens for
+# Azure AI Foundry agents in production without storing static API keys.
+azure-identity==1.19.0
+
+# Async HTTP transport required under the hood by azure.identity.aio credentials
+# so Managed Identity token acquisition stays non-blocking on the event loop.
+aiohttp==3.11.11
+
+# --- Offline Verification & Test Suite ---
+# Test runner for backend security boundaries, provider adapters, and JS contracts.
+pytest==8.3.4
+
+# Enables async pytest coroutines for testing streaming body limits, slow-client
+# timeouts, and ASGI transport behavior without network access.
+pytest-asyncio==0.24.0

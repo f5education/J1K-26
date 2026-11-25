@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Derek Sports — ShopAI Architecture Topology</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #10b981;
+      --primary-glow: rgba(16, 185, 129, 0.2);
+      --accent-f5: #ef4444;
+      --accent-azure: #0ea5e9;
+      --accent-orange: #f59e0b;
+      --line: #475569;
+    }
+    body.light-theme {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-border: #cbd5e1;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #059669;
+      --primary-glow: rgba(5, 150, 105, 0.15);
+      --line: #cbd5e1;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .title-group h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .title-group p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .controls {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .btn {
+      padding: 0.45rem 0.85rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 6px;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+    .topology-container {
+      flex: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .scenario-selector {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .grid-nodes {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+    .node-card {
+      background: var(--bg);
+      border: 2px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1.25rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .node-card.highlight {
+      border-color: var(--primary);
+      box-shadow: 0 0 16px var(--primary-glow);
+    }
+    .node-card.danger {
+      border-color: var(--accent-f5);
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.2);
+    }
+    .node-icon {
+      font-size: 2.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .node-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .node-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .wire-details {
+      background: var(--bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-top: auto;
+    }
+    .wire-details h3 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .wire-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    .wire-step {
+      display: flex;
+      gap: 0.5rem;
+      align-items: baseline;
+    }
+    .step-badge {
+      background: var(--card-border);
+      color: var(--text);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="title-group">
+      <h1>Derek Sports — ShopAI Architecture Topology</h1>
+      <p>Interactive 4-scenario multi-backend runtime explorer</p>
+    </div>
+    <div class="controls">
+      <button type="button" class="btn" id="theme-btn">Toggle Light/Dark</button>
+    </div>
+  </header>
+
+  <div class="topology-container">
+    <div class="scenario-selector">
+      <button type="button" class="btn active" data-scenario="f5-allowed">Scenario 1: F5 AI Guardrails (Allowed)</button>
+      <button type="button" class="btn" data-scenario="f5-blocked">Scenario 2: F5 AI Guardrails (Policy Blocked)</button>
+      <button type="button" class="btn" data-scenario="foundry-agent">Scenario 3: Azure AI Foundry Agent</button>
+      <button type="button" class="btn" data-scenario="foundry-openai">Scenario 4: Direct Azure OpenAI</button>
+    </div>
+
+    <div class="grid-nodes">
+      <div class="node-card highlight" id="node-browser">
+        <div class="node-icon">🌐</div>
+        <div class="node-name">Browser Client</div>
+        <div class="node-sub">Storefront &amp; Chat UI (public/)</div>
+      </div>
+      <div class="node-card highlight" id="node-container">
+        <div class="node-icon">🐳</div>
+        <div class="node-name">Docker + FastAPI</div>
+        <div class="node-sub">Hardened Proxy Gateway (:80)</div>
+      </div>
+      <div class="node-card" id="node-f5">
+        <div class="node-icon">🛡️</div>
+        <div class="node-name">F5 AI Guardrails</div>
+        <div class="node-sub">CalypsoAI SaaS / Policy Engine</div>
+      </div>
+      <div class="node-card" id="node-azure">
+        <div class="node-icon">☁️</div>
+        <div class="node-name">Azure AI Foundry</div>
+        <div class="node-sub">Agents / OpenAI Completions</div>
+      </div>
+    </div>
+
+    <div class="wire-details">
+      <h3 id="scenario-title">Scenario 1: F5 AI Guardrails (Allowed Sports Turn)</h3>
+      <div class="wire-steps" id="scenario-steps">
+        <div class="wire-step"><span class="step-badge">1</span> Browser POST /api/proxy (Host/Origin: localhost, Content-Type: text/plain, payload: { input: "Recommend soccer ball" })</div>
+        <div class="wire-step"><span class="step-badge">2</span> FastAPI checks Host &amp; Origin, reads bounded body (&lt;64 KiB), rotates 192-bit opaque token</div>
+        <div class="wire-step"><span class="step-badge">3</span> Server calls POST https://us2.calypsoai.app/openai/shopai-cai-project/chat/completions (Bearer token)</div>
+        <div class="wire-step"><span class="step-badge">4</span> F5 scanner passes prompt -&gt; LLM returns choices[0].message.content (HTTP 200)</div>
+        <div class="wire-step"><span class="step-badge">5</span> FastAPI appends turn to server history (max 40) -&gt; returns HTTP 200 { response, conversationId }</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const scenarios = {
+      'f5-allowed': {
+        title: 'Scenario 1: F5 AI Guardrails (Allowed Sports Turn)',
+        activeNodes: ['node-browser', 'node-container', 'node-f5'],
+        steps: [
+          '1. Browser POST /api/proxy (Host/Origin check, text/plain JSON payload, lang: "en")',
+          '2. FastAPI validates input (1-500 chars), rotates opaque 192-bit token, resolves session history',
+          '3. Server initiates outbound HTTPS to {F5_BASE_URL}/openai/{connection}/chat/completions with Bearer token',
+          '4. F5 Policy Engine validates scanners -> forwards to CAI model deployment -> returns HTTP 200',
+          '5. FastAPI saves turn to session history (capped at 40 messages) -> returns HTTP 200 { response, conversationId }'
+        ]
+      },
+      'f5-blocked': {
+        title: 'Scenario 2: F5 AI Guardrails (Policy Blocked Topic)',
+        activeNodes: ['node-browser', 'node-container', 'node-f5'],
+        isDanger: true,
+        steps: [
+          '1. Browser submits off-policy prompt (e.g. competitor topic or financial query)',
+          '2. Server forwards prompt to F5 AI Guardrails endpoint via HTTPS Bearer authentication',
+          '3. F5 scanner triggers policy block -> returns HTTP 400 with cai_error.outcome = "blocked"',
+          '4. FastAPI recognizes HTTP 400 block -> extracts custom scanner message or default "This message has been blocked by <scanner>"',
+          '5. Server returns HTTP 200 with guardrail text and rotated opaque token; blocked prompt is NOT saved to history'
+        ]
+      },
+      'foundry-agent': {
+        title: 'Scenario 3: Azure AI Foundry Agent (Responses API + Managed Identity)',
+        activeNodes: ['node-browser', 'node-container', 'node-azure'],
+        steps: [
+          '1. Browser POST /api/proxy with user turn and optional opaque conversationId',
+          '2. Server acquires Entra ID Bearer token using ManagedIdentityCredential for https://ai.azure.com/.default',
+          '3. Server posts to {FOUNDRY_PROJECT_ENDPOINT}/agents/{name}/endpoint/protocols/openai/responses?api-version=v1',
+          '4. Foundry executes agent workflow (tools/instructions) -> returns status="completed" and private resp_... ID',
+          '5. FastAPI maps private resp_ ID to random opaque browser ID in session store -> returns HTTP 200'
+        ]
+      },
+      'foundry-openai': {
+        title: 'Scenario 4: Direct Azure OpenAI (Stateless Chat Completions)',
+        activeNodes: ['node-browser', 'node-container', 'node-azure'],
+        steps: [
+          '1. Browser POST /api/proxy with single turn input',
+          '2. FastAPI verifies Origin/Host and formats direct completions payload with api-key header',
+          '3. Server calls POST {AZURE_OPENAI_ENDPOINT}chat/completions (URL trailing slash normalized)',
+          '4. Azure OpenAI returns choices[0].message.content (HTTP 200)',
+          '5. FastAPI returns stateless HTTP 200 { response: "..." } without conversationId'
+        ]
+      }
+    };
+
+    const buttons = document.querySelectorAll('.scenario-selector .btn');
+    const nodes = document.querySelectorAll('.node-card');
+    const titleElem = document.getElementById('scenario-title');
+    const stepsElem = document.getElementById('scenario-steps');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const key = btn.getAttribute('data-scenario');
+        const sc = scenarios[key];
+
+        titleElem.textContent = sc.title;
+        stepsElem.innerHTML = '';
+        sc.steps.forEach((s, idx) => {
+          const div = document.createElement('div');
+          div.className = 'wire-step';
+          const badge = document.createElement('span');
+          badge.className = 'step-badge';
+          badge.textContent = idx + 1;
+          div.appendChild(badge);
+          div.appendChild(document.createTextNode(' ' + s.replace(/^\d+\.\s*/, '')));
+          stepsElem.appendChild(div);
+        });
+
+        nodes.forEach(n => {
+          n.className = 'node-card';
+          if (sc.activeNodes.includes(n.id)) {
+            n.classList.add(sc.isDanger && n.id === 'node-f5' ? 'danger' : 'highlight');
+          }
+        });
+      });
+    });
+
+    document.getElementById('theme-btn').addEventListener('click', () => {
+      document.body.classList.toggle('light-theme');
+    });
+  </script>
+</body>
+</html>
